@@ -1,0 +1,4 @@
+serializableClass
+spacy
+pymorphy2
+polyglot

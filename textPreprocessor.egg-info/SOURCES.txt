@@ -1,0 +1,11 @@
+README.md
+setup.py
+textPreprocessor/__init__.py
+textPreprocessor/textPreprocessor.py
+textPreprocessor.egg-info/PKG-INFO
+textPreprocessor.egg-info/SOURCES.txt
+textPreprocessor.egg-info/dependency_links.txt
+textPreprocessor.egg-info/requires.txt
+textPreprocessor.egg-info/top_level.txt
+textPreprocessor/textTokenizer/__init__.py
+textPreprocessor/textTokenizer/textTokenizer.py
