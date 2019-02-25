@@ -2,3 +2,6 @@ serializableClass
 spacy
 pymorphy2
 polyglot
+
+[:python_version == "2.7"]
+futures

@@ -2,6 +2,7 @@
 
 Installation:
 
+pip install futures==3.1.1
 pip install textPreprocessor
 
 python -m spacy download en

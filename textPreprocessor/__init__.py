@@ -2,4 +2,4 @@ from textPreprocessor.textPreprocessor import TextPreprocessor
 from textPreprocessor.textTokenizer.textTokenizerSpacyBased.textTokenizerSpacyBased import TextTokenizerSpacyBased
 from textPreprocessor.textTokenizer.rus.textTokenizerRus import TextTokenizerRus
 
-__version__ = '0.0.2'
+__version__ = '0.0.4'

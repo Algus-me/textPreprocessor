@@ -14,5 +14,5 @@ setup(
     author_email='alex.gusarin@gmail.com',
     license='MIT',
     packages=find_packages(),
-	install_requires=['serializableClass', 'spacy', 'pymorphy2', 'polyglot']
+	install_requires=['serializableClass', 'spacy', 'pymorphy2', 'polyglot', 'futures; python_version == "2.7"'],
 )
