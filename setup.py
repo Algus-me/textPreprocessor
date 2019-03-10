@@ -1,6 +1,8 @@
 from setuptools import setup, find_packages
 from os.path import join, dirname
 
+from textPreprocessor import __version__
+
 import textPreprocessor
 
 setup(
@@ -8,7 +10,7 @@ setup(
     description='This project makes saving/loading procedure easier for classes with inheritance.',
     long_description=open(join(dirname(__file__), 'README.md')).read(),
 	classifiers=['Programming Language :: Python :: 3.6', 'Topic :: Text Processing :: Linguistic',],
-    version=textPreprocessor.__version__,
+    version=__version__,
     url='https://github.com/Valtonis/textPreprocessor.git',
     author='Alexander Gusarin',
     author_email='alex.gusarin@gmail.com',

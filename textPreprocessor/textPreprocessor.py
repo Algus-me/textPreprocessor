@@ -7,12 +7,19 @@ from polyglot.detect import Detector
 
 import serializableClass
 
-from .textTokenizer.textTokenizerSpacyBased.textTokenizerSpacyBased import TextTokenizerSpacyBased
-from .textTokenizer.rus.textTokenizerRus import TextTokenizerRus
+from .textTokenizer import TextTokenizerSpacyBased
+from .textTokenizer import TextTokenizerRus
 
 def initLanguagePreprocessorComponents():
 
     languagePreprocessorComponents = {}
+    
+    languagePreprocessorComponents["un"] = {}
+    languagePreprocessorComponents["un"]["tokenizer"] = TextTokenizerSpacyBased()
+    languagePreprocessorComponents["un"]["tokenizer"].setLinguisticProcessor(spacy.load('xx'))
+    languagePreprocessorComponents["un"]["stopPos"] = set()
+    languagePreprocessorComponents["un"]["stopTokens"] = set()
+    languagePreprocessorComponents["un"]["stopLemmas"] = set()
 
     languagePreprocessorComponents["en"] = {}
     languagePreprocessorComponents["en"]["tokenizer"] = TextTokenizerSpacyBased()
@@ -73,16 +80,22 @@ def initLanguagePreprocessorComponents():
 
 class TextPreprocessor(serializableClass.SerializableClass):
 
-    def getFilteredTokens(self, text, lang=None):
+    def getFilteredTokens(self, text, lang=None, defaultLangIfNotDetected=None):
         if lang is None:
-            detectionResult = Detector(text)
-            lang = detectionResult.language.code
-        if lang not in self.languagePreprocessorComponents_:
-            if re.match("^[ A-Za-z0-9_\-@!\?,\.\$\(\):;]*$", text):
+            try:
+                detectionResult = Detector(text)
+                lang = detectionResult.language.code
+            except:
+                lang = "un"
+        if lang not in self.languagePreprocessorComponents_ or lang=="un":
+            lettersFromText = re.sub("\W", "", text)
+            if re.match("^[A-Za-z]*$", text):
                 lang = "en"
-            else:
-                return None
-        tokens = self.languagePreprocessorComponents_[lang]["tokenizer"].tokenize(text)
+            elif re.match("^[А-Яа-я]*$", text):
+                lang = "ru"
+            elif defaultLangIfNotDetected is not None:
+                lang = defaultLangIfNotDetected
+        tokens = self.languagePreprocessorComponents_[lang]["tokenizer"].tokenize(text.lower())
         res = {"filteredTokens" : [], "lang" : lang}
         for t in tokens:
             if t.pos_ in self.languagePreprocessorComponents_[lang]["stopPos"]:

@@ -9,3 +9,5 @@ textPreprocessor.egg-info/requires.txt
 textPreprocessor.egg-info/top_level.txt
 textPreprocessor/textTokenizer/__init__.py
 textPreprocessor/textTokenizer/textTokenizer.py
+textPreprocessor/textTokenizer/textTokenizerRus.py
+textPreprocessor/textTokenizer/textTokenizerSpacyBased.py

@@ -7,8 +7,8 @@ from polyglot.detect import Detector
 
 import serializableClass
 
-from .textTokenizer.textTokenizerSpacyBased.textTokenizerSpacyBased import TextTokenizerSpacyBased
-from .textTokenizer.rus.textTokenizerRus import TextTokenizerRus
+from .textTokenizer import TextTokenizerSpacyBased
+from .textTokenizer import TextTokenizerRus
 
 def initLanguagePreprocessorComponents():
 

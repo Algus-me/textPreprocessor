@@ -1,5 +1,5 @@
-from textPreprocessor.textPreprocessor import TextPreprocessor
-from textPreprocessor.textTokenizer.textTokenizerSpacyBased.textTokenizerSpacyBased import TextTokenizerSpacyBased
-from textPreprocessor.textTokenizer.rus.textTokenizerRus import TextTokenizerRus
+from .textPreprocessor import TextPreprocessor
+from .textTokenizer import TextTokenizerSpacyBased
+from .textTokenizer import TextTokenizerRus
 
-__version__ = '0.0.4'
+__version__ = '0.0.11'
