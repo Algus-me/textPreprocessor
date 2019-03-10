@@ -88,8 +88,13 @@ class TextPreprocessor(serializableClass.SerializableClass):
             except:
                 lang = "un"
         if lang not in self.languagePreprocessorComponents_ or lang=="un":
-            lettersFromText = re.sub("\W", "", text)
-            if re.match("^[A-Za-z]*$", text):
+            lettersFromText = re.sub("[\W\d_]", "", text)
+            if len(lettersFromText) == 0:
+                if defaultLangIfNotDetected is not None:
+                    lang = defaultLangIfNotDetected
+                else:
+                    lang = "en"
+            elif re.match("^[A-Za-z]*$", text):
                 lang = "en"
             elif re.match("^[А-Яа-я]*$", text):
                 lang = "ru"
