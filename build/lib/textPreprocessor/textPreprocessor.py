@@ -79,14 +79,36 @@ def initLanguagePreprocessorComponents():
     return languagePreprocessorComponents
 
 class TextPreprocessor(serializableClass.SerializableClass):
+    
+    def getFilteredTokens(self, text, lang):
+        tokens = self.languagePreprocessorComponents_[lang]["tokenizer"].tokenize(text.lower())
+        res = []
+        for t in tokens:
+            if t.pos_ in self.languagePreprocessorComponents_[lang]["stopPos"]:
+                continue
+            if t.text in self.languagePreprocessorComponents_[lang]["stopTokens"]:
+                continue
+            if t.lemma_ in self.languagePreprocessorComponents_[lang]["stopLemmas"]:
+                continue
+            res.append(t)
+        return res
 
-    def getFilteredTokens(self, text, lang=None, defaultLangIfNotDetected=None):
-        if lang is None:
-            try:
-                detectionResult = Detector(text)
-                lang = detectionResult.language.code
-            except:
-                lang = "un"
+    def getFilteredTokensAndDetectedLanguage(self, text, defaultLangIfNotDetected=None):
+        lang = self.detectLanguage(text)
+        lang = self.chooseKnownLanguageOfTextIfPossible(text, lang, defaultLangIfNotDetected)
+        filteredTokens = self.getFilteredTokens(text, lang)
+        res = {"filteredTokens" : filteredTokens, "lang" : lang}
+        return res
+    
+    def detectLanguage(self, text):
+        try:
+            detectionResult = Detector(text)
+            lang = detectionResult.language.code
+        except:
+            lang = "un"
+        return lang
+    
+    def chooseKnownLanguageOfTextIfPossible(self, text, lang, defaultLangIfNotDetected=None):
         if lang not in self.languagePreprocessorComponents_ or lang=="un":
             lettersFromText = re.sub("[\W\d_]", "", text)
             if len(lettersFromText) == 0:
@@ -100,17 +122,9 @@ class TextPreprocessor(serializableClass.SerializableClass):
                 lang = "ru"
             elif defaultLangIfNotDetected is not None:
                 lang = defaultLangIfNotDetected
-        tokens = self.languagePreprocessorComponents_[lang]["tokenizer"].tokenize(text.lower())
-        res = {"filteredTokens" : [], "lang" : lang}
-        for t in tokens:
-            if t.pos_ in self.languagePreprocessorComponents_[lang]["stopPos"]:
-                continue
-            if t.text in self.languagePreprocessorComponents_[lang]["stopTokens"]:
-                continue
-            if t.lemma_ in self.languagePreprocessorComponents_[lang]["stopLemmas"]:
-                continue
-            res["filteredTokens"].append(t)
-        return res
+            else:
+                lang = "un"
+        return lang
 
 # SETTERS AND GETTERS:
 
@@ -171,3 +185,4 @@ class TextPreprocessor(serializableClass.SerializableClass):
     
 TextPreprocessor.initNewRootOfInheritance()
 TextPreprocessor.registerClass()
+

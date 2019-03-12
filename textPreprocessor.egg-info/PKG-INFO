@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: textPreprocessor
-Version: 0.0.12
+Version: 0.0.15
 Summary: This project makes saving/loading procedure easier for classes with inheritance.
 Home-page: https://github.com/Valtonis/textPreprocessor.git
 Author: Alexander Gusarin
