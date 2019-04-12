@@ -54,6 +54,8 @@ class TextPreprocessor(serializableClass.SerializableClass):
         tokens = self.languageTokenizers_[lang].tokenize(text)
         res = []
         for t in tokens:
+            if re.search(r"[\W\d]", t.text):  # if token is not a word (not consist of letters) then skip
+                continue
             if t.lemma_ == "-PRON-":
                 t.lemma_ = t.text.lower()
             if t.pos_ in self.languageTokenizeParameters_[lang]["stopPos"]:
